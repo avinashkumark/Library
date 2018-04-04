@@ -1,3 +1,4 @@
 com\ska\sf\net\library\LibraryApplication.class
+com\ska\sf\net\library\config\mvc\MvcConfig.class
 com\ska\sf\net\library\config\SecurityConfig.class
 com\ska\sf\net\library\controller\PostsController.class

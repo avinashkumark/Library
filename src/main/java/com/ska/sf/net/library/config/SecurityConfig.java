@@ -45,13 +45,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //super.configure(http);
         http
                 .authorizeRequests()
+                    .antMatchers("/resources/**").permitAll()
                     .antMatchers("/posts/post/list").permitAll()
                     .antMatchers("/posts/post/add").hasRole("ADMIN")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/user/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
+                        .loginPage("/login")
+                        .permitAll()
                 .and()
-                    .logout();
+                    .logout()
+                    .logoutSuccessUrl("/index.html");
 
 
     }
