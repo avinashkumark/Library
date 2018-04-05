@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //@Resource(name = "userDetailsService()")
@@ -45,19 +47,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //super.configure(http);
         http
                 .authorizeRequests()
-                    .antMatchers("/resources/**").permitAll()
-                    .antMatchers("/posts/post/list").permitAll()
-                    .antMatchers("/posts/post/add").hasRole("ADMIN")
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/user/**").permitAll()
+//                    .antMatchers("/resources/**").permitAll()
+//                    .antMatchers("/posts/post/list").permitAll()
+//                    .antMatchers("/posts/post/add").hasRole("ADMIN")
+//                    .antMatchers("/admin/**").hasRole("ADMIN")
+//                    .antMatchers("/user/**").permitAll()
+                    .antMatchers("/", "/home").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                        .loginPage("/login")
-                        .permitAll()
+                        .loginPage("/login").permitAll()
+                        .successForwardUrl("/hello")
+
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/index.html");
+                    //.logoutSuccessUrl("/index.html");
+                    .permitAll();
 
 
     }
